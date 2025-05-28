@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Computer Vision MCQ Exam</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .fade-in {
+        animation: fadeIn 0.8s ease-in;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gradient-to-r from-indigo-100 to-purple-100 min-h-screen p-6">
+    <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-lg fade-in">
+      <h1 class="text-3xl font-bold mb-6 text-center text-indigo-600">Computer Vision MCQ Exam</h1>
+      <form id="quiz-form" class="space-y-8"></form>
+      <div class="text-center mt-8">
+        <button id="submit-btn" class="bg-indigo-500 text-white px-6 py-2 rounded-full hover:bg-indigo-600 transition">Submit</button>
+        <div id="result" class="mt-4 text-lg font-semibold text-indigo-700"></div>
+      </div>
+    </div>
+
+    <script>
+      const questions = [
+        {
+          q: "What is the basic unit of a digital image?",
+          options: ["Pixel", "Megabyte", "Byte", "Bit"],
+          answer: 0,
+        },
+        {
+          q: "How does light interact with an object to create an image?",
+          options: [
+            "Light refracts through the object",
+            "Light absorbs into the object",
+            "Light reflects off the object's surface and enters the camera lens",
+            "Light diffracts around the object",
+          ],
+          answer: 2,
+        },
+        {
+          q: "What component in a camera focuses the light?",
+          options: ["Shutter", "Aperture", "Lens", "Flash"],
+          answer: 2,
+        },
+        {
+          q: "What captures the light information in a camera?",
+          options: ["Aperture", "Shutter", "Image sensor", "Flash"],
+          answer: 2,
+        },
+        {
+          q: "What are the different color channels used in digital images?",
+          options: [
+            "RGB and YUV",
+            "CMYK and LAB",
+            "HSV and HSL",
+            "RGB and Grayscale",
+          ],
+          answer: 3,
+        },
+        {
+          q: "What process converts the analog electrical signals from the sensor into digital data?",
+          options: [
+            "Digital signal processing",
+            "Analog-to-digital conversion (ADC)",
+            "Data compression",
+            "Image rendering",
+          ],
+          answer: 1,
+        },
+        {
+          q: "What determines the resolution (sharpness) of a digital image?",
+          options: [
+            "Megapixels of the camera",
+            "Size of the lens",
+            "Total number of pixels in the image sensor",
+            "ISO setting",
+          ],
+          answer: 2,
+        },
+        {
+          q: "What is the purpose of color channels in digital images?",
+          options: [
+            "To store audio information",
+            "To represent different wavelengths of light",
+            "To control image brightness",
+            "To add special effects",
+          ],
+          answer: 1,
+        },
+        {
+          q: "Which of the following is NOT a color model used in digital imaging?",
+          options: ["RGB", "CMYK", "YUV", "JPEG"],
+          answer: 3,
+        },
+        {
+          q: "What does the term 'megapixel' refer to in digital cameras?",
+          options: [
+            "The size of the camera lens",
+            "The number of pixels in the image sensor",
+            "The amount of light the camera can capture",
+            "The speed of the camera's shutter",
+          ],
+          answer: 1,
+        },
+        {
+          q: "Which component controls the amount of light entering the camera?",
+          options: ["Shutter", "Aperture", "Lens", "Flash"],
+          answer: 1,
+        },
+        {
+          q: "What is the primary function of the shutter in a camera?",
+          options: [
+            "To focus light onto the sensor",
+            "To control the duration of light exposure",
+            "To adjust the color balance",
+            "To store the captured image",
+          ],
+          answer: 1,
+        },
+        {
+          q: "Which of the following is true about the RGB color model?",
+          options: [
+            "It is used for printing purposes",
+            "It stands for Red, Green, and Blue",
+            "It is a subtractive color model",
+            "It uses four color channels",
+          ],
+          answer: 1,
+        },
+        {
+          q: "What does ISO measure in photography?",
+          options: [
+            "The sensitivity of the image sensor to light",
+            "The sharpness of the image",
+            "The color accuracy of the image",
+            "The speed of the camera's autofocus",
+          ],
+          answer: 0,
+        },
+        {
+          q: "Which of the following is a subtractive color model?",
+          options: ["RGB", "CMYK", "YUV", "HSV"],
+          answer: 1,
+        },
+        {
+          q: "What is the role of the image sensor in a digital camera?",
+          options: [
+            "To focus light onto the lens",
+            "To convert light into electrical signals",
+            "To control the shutter speed",
+            "To adjust the aperture size",
+          ],
+          answer: 1,
+        },
+        {
+          q: "Which of the following is NOT a type of image sensor?",
+          options: ["CCD", "CMOS", "LCD", "Foveon"],
+          answer: 2,
+        },
+        {
+          q: "What is the primary purpose of data compression in digital imaging?",
+          options: [
+            "To increase the resolution of the image",
+            "To reduce the file size of the image",
+            "To enhance the color accuracy",
+            "To improve the sharpness of the image",
+          ],
+          answer: 1,
+        },
+        {
+          q: "Which of the following file formats is commonly used for lossless image compression?",
+          options: ["JPEG", "PNG", "GIF", "BMP"],
+          answer: 1,
+        },
+        {
+          q: "What does the term 'bit depth' refer to in digital imaging?",
+          options: [
+            "The number of pixels in an image",
+            "The amount of light captured by the sensor",
+            "The number of bits used to represent each pixel's color",
+            "The size of the image file",
+          ],
+          answer: 2,
+        },
+        {
+          q: "Which of the following is a characteristic of a high dynamic range (HDR) image?",
+          options: [
+            "It has a lower resolution",
+            "It captures a wider range of light and dark details",
+            "It uses only grayscale colors",
+            "It has a smaller file size",
+          ],
+          answer: 1,
+        },
+        {
+          q: "What is the purpose of white balance in photography?",
+          options: [
+            "To adjust the brightness of the image",
+            "To ensure accurate color representation under different lighting conditions",
+            "To increase the resolution of the image",
+            "To reduce noise in the image",
+          ],
+          answer: 1,
+        },
+        {
+          q: "Which of the following is a common method for reducing noise in digital images?",
+          options: [
+            "Increasing the ISO setting",
+            "Decreasing the shutter speed",
+            "Using image stacking",
+            "Reducing the aperture size",
+          ],
+          answer: 2,
+        },
+        {
+          q: "What is the primary function of the flash in a camera?",
+          options: [
+            "To focus light onto the sensor",
+            "To provide additional light in low-light conditions",
+            "To control the shutter speed",
+            "To adjust the color balance",
+          ],
+          answer: 1,
+        },
+        {
+          q: "Which of the following is true about grayscale images?",
+          options: [
+            "They contain only black and white pixels",
+            "They use a single channel to represent brightness",
+            "They cannot be compressed",
+            "They are always smaller in file size than color images",
+          ],
+          answer: 1,
+        },
+        {
+          q: "Which type of sensor is commonly used in digital cameras?",
+          options: [
+            "Optical sensor",
+            "Magnetic sensor",
+            "Image sensor (CMOS or CCD)",
+            "Temperature sensor",
+          ],
+          answer: 2,
+        },
+        {
+          q: "What role does an image processor play in digital photography?",
+          options: [
+            "Adjusting camera settings",
+            "Capturing images",
+            "Enhancing image quality",
+            "Controlling autofocus",
+          ],
+          answer: 2,
+        },
+        {
+          q: "How does focal length affect the image captured?",
+          options: [
+            "It changes the image resolution",
+            "It influences magnification",
+            "It alters the image color",
+            "It affects the image contrast",
+          ],
+          answer: 1,
+        },
+        {
+          q: "What is the difference between perspective and orthographic projection in image formation?",
+          options: [
+            "Perspective projection captures 3D depth",
+            "Orthographic projection creates natural effects",
+            "Perspective projection shows parallel lines",
+            "Orthographic projection creates diminishing effects",
+          ],
+          answer: 0,
+        },
+        {
+          q: "What is the role of image formation in computer vision?",
+          options: [
+            "Enhancing image resolution",
+            "Capturing motion blur",
+            "Aiding in object recognition and scene analysis",
+            "Adjusting color balance",
+          ],
+          answer: 2,
+        },
+        {
+          q: "What factors affect the amount of light captured by the sensor?",
+          options: [
+            "Lens color",
+            "Sensor size",
+            "Aperture size, shutter speed, and scene illumination",
+            "Camera brand",
+          ],
+          answer: 2,
+        },
+        {
+          q: "What is the relationship between pixel size and image quality?",
+          options: [
+            "Larger pixels lead to lower image quality",
+            "Smaller pixels lead to higher image quality",
+            "Larger pixels generally capture more light",
+            "Pixel size has no impact on image quality",
+          ],
+          answer: 2,
+        },
+        {
+          q: "How does aperture size impact image formation?",
+          options: [
+            "It affects the image color balance",
+            "It influences the depth of field",
+            "It alters the image resolution",
+            "It has no effect on image quality",
+          ],
+          answer: 1,
+        },
+        {
+          q: "What role does shutter speed play in image formation?",
+          options: [
+            "It controls the sensor's sensitivity",
+            "It determines the image's color temperature",
+            "It affects motion blur in the image",
+            "It has no impact on image quality",
+          ],
+          answer: 2,
+        },
+        {
+          q: "Which of the following is true about CMOS sensors?",
+          options: [
+            "They consume more power than CCD sensors",
+            "They are less expensive to produce than CCD sensors",
+            "They have lower image quality than CCD sensors",
+            "They are not used in modern cameras",
+          ],
+          answer: 1,
+        },
+        {
+          q: "What is the primary function of the autofocus system in a camera?",
+          options: [
+            "To adjust the aperture size",
+            "To ensure the subject is in sharp focus",
+            "To control the shutter speed",
+            "To enhance image color",
+          ],
+          answer: 1,
+        },
+        {
+          q: "Which of the following is a characteristic of a wide-angle lens?",
+          options: [
+            "It has a long focal length",
+            "It captures a narrow field of view",
+            "It exaggerates perspective and depth",
+            "It is used primarily for telephoto photography",
+          ],
+          answer: 2,
+        },
+        {
+          q: "What is the purpose of the ISO setting in a camera?",
+          options: [
+            "To control the aperture size",
+            "To adjust the sensor's sensitivity to light",
+            "To change the focal length of the lens",
+            "To set the shutter speed",
+          ],
+          answer: 1,
+        },
+        {
+          q: "Which of the following is true about depth of field?",
+          options: [
+            "It is unaffected by aperture size",
+            "It refers to the range of distance that appears in focus",
+            "It is greater with a longer focal length",
+            "It is not important in portrait photography",
+          ],
+          answer: 1,
+        },
+        {
+          q: "What is the primary purpose of a camera's viewfinder?",
+          options: [
+            "To display the captured image",
+            "To compose and frame the shot",
+            "To adjust the focus manually",
+            "To control the flash",
+          ],
+          answer: 1,
+        },
+        {
+          q: "Which of the following is a disadvantage of using a high ISO setting?",
+          options: [
+            "It reduces the shutter speed",
+            "It increases image noise",
+            "It decreases the depth of field",
+            "It alters the focal length",
+          ],
+          answer: 1,
+        },
+        {
+          q: "What is the primary function of a camera's flash?",
+          options: [
+            "To focus the image",
+            "To provide additional light in low-light conditions",
+            "To adjust the white balance",
+            "To control the aperture size",
+          ],
+          answer: 1,
+        },
+        {
+          q: "Which of the following is true about RAW image files?",
+          options: [
+            "They are smaller in size than JPEG files",
+            "They contain unprocessed data from the sensor",
+            "They cannot be edited",
+            "They are less detailed than JPEG files",
+          ],
+          answer: 1,
+        },
+        {
+          q: "What is the purpose of image stabilization in a camera?",
+          options: [
+            "To reduce motion blur caused by camera shake",
+            "To increase the shutter speed",
+            "To adjust the aperture size",
+            "To enhance image resolution",
+          ],
+          answer: 0,
+        },
+        {
+          q: "Which of the following is true about telephoto lenses?",
+          options: [
+            "They have a short focal length",
+            "They are used for wide-angle photography",
+            "They magnify distant subjects",
+            "They decrease the depth of field",
+          ],
+          answer: 2,
+        },
+        {
+          q: "What is the primary purpose of a camera's histogram?",
+          options: [
+            "To display the image's color balance",
+            "To show the distribution of light and dark tones in the image",
+            "To adjust the focus of the lens",
+            "To control the shutter speed",
+          ],
+          answer: 1,
+        },
+        {
+          q: "Which of the following is true about the rule of thirds in photography?",
+          options: [
+            "It is a guideline for composing visually appealing images",
+            "It is used to adjust the aperture size",
+            "It determines the shutter speed",
+            "It is a method for reducing image noise",
+          ],
+          answer: 0,
+        },
+        {
+          q: "What is the primary purpose of a camera's white balance setting?",
+          options: [
+            "To adjust the brightness of the image",
+            "To ensure accurate color representation under different lighting conditions",
+            "To control the depth of field",
+            "To increase the resolution of the image",
+          ],
+          answer: 1,
+        },
+        {
+          q: "Which of the following is true about image noise?",
+          options: [
+            "It is more noticeable in low ISO settings",
+            "It is caused by excessive light",
+            "It can be reduced by using a lower ISO setting",
+            "It has no impact on image quality",
+          ],
+          answer: 2,
+        },
+        {
+          q: "What is the primary purpose of a camera's metering system?",
+          options: [
+            "To measure the amount of light in the scene",
+            "To adjust the focal length",
+            "To control the flash",
+            "To enhance image resolution",
+          ],
+          answer: 0,
+        },
+        {
+          q: "Image noise refers to unwanted variations in pixel values that can appear as grain or speckles in the image.",
+          options: ["True", "False"],
+          answer: 0,
+        },
+        {
+          q: "Depth information captures how far objects are from the camera, which is not directly available in a standard 2D image but can be estimated using techniques like stereo vision.",
+          options: ["True", "False"],
+          answer: 0,
+        },
+        {
+          q: "Image distortion occurs when the lens bends light unevenly, causing straight lines to appear curved or objects to appear warped.",
+          options: ["True", "False"],
+          answer: 0,
+        },
+        {
+          q: "Lighting significantly affects object appearance in the image. Consistent lighting conditions are preferred for robust computer vision algorithms.",
+          options: ["True", "False"],
+          answer: 0,
+        },
+        {
+          q: "Image noise can be completely eliminated during image capture.",
+          options: ["True", "False"],
+          answer: 1,
+        },
+        {
+          q: "Depth information is always accurately captured in a standard 2D image.",
+          options: ["True", "False"],
+          answer: 1,
+        },
+        {
+          q: "Image distortion is caused by variations in scene illumination.",
+          options: ["True", "False"],
+          answer: 1,
+        },
+        {
+          q: "Lighting conditions have no impact on the performance of computer vision algorithms.",
+          options: ["True", "False"],
+          answer: 1,
+        },
+        {
+          q: "Image noise is more noticeable in images captured with a high ISO setting.",
+          options: ["True", "False"],
+          answer: 0,
+        },
+        {
+          q: "Depth information can only be captured using specialized hardware like LiDAR or depth sensors.",
+          options: ["True", "False"],
+          answer: 1,
+        },
+        {
+          q: "Image distortion can be corrected using software algorithms during post-processing.",
+          options: ["True", "False"],
+          answer: 0,
+        },
+        {
+          q: "Consistent lighting conditions are unnecessary for computer vision algorithms, as they can adapt to any lighting scenario.",
+          options: ["True", "False"],
+          answer: 1,
+        },
+      ]; // Insert questions array here as in previous response
+
+      const form = document.getElementById("quiz-form");
+
+      questions.forEach((item, index) => {
+        const fieldset = document.createElement("fieldset");
+        fieldset.className = "p-4 border rounded-xl bg-gray-50 shadow-sm fade-in";
+
+        const legend = document.createElement("legend");
+        legend.className = "font-semibold text-gray-800 mb-2";
+        legend.textContent = `${index + 1}. ${item.q}`;
+        fieldset.appendChild(legend);
+
+        item.options.forEach((option, i) => {
+          const label = document.createElement("label");
+          label.className = "block mb-1 text-gray-700 cursor-pointer";
+          label.innerHTML = `<input type="radio" name="q${index}" value="${i}" class="mr-2"> ${option}`;
+          fieldset.appendChild(label);
+        });
+
+        const feedback = document.createElement("div");
+        feedback.className = "feedback text-sm mt-2 font-medium";
+        fieldset.appendChild(feedback);
+
+        form.appendChild(fieldset);
+      });
+
+      document.getElementById("submit-btn").addEventListener("click", (e) => {
+        e.preventDefault();
+        let score = 0;
+        questions.forEach((item, i) => {
+          const selected = document.querySelector(`input[name='q${i}']:checked`);
+          const feedback = form.children[i].querySelector(".feedback");
+          if (selected) {
+            if (parseInt(selected.value) === item.answer) {
+              score++;
+              feedback.textContent = "✅ Correct";
+              feedback.className = "feedback text-green-600";
+            } else {
+              feedback.textContent = `❌ Wrong (Correct: ${item.options[item.answer]})`;
+              feedback.className = "feedback text-red-600";
+            }
+          } else {
+            feedback.textContent = `⚠️ No answer selected (Correct: ${item.options[item.answer]})`;
+            feedback.className = "feedback text-orange-500";
+          }
+        });
+        document.getElementById("result").textContent = `🎯 You scored ${score} out of ${questions.length}`;
+      });
+    </script>
+  </body>
+</html>
